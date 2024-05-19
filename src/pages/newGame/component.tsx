@@ -4,12 +4,12 @@ import oIcon from "../../assets/o.svg";
 import { Link } from "react-router-dom";
 
 interface Props {
-  isPlayerXFirst: boolean;
-  handleSetIsPlayerXFirst: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  userIcon: "X" | "O";
+  handleSetUserIcon: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Component: React.FC<Props> = (props) => {
-  const { isPlayerXFirst, handleSetIsPlayerXFirst } = props;
+  const { userIcon, handleSetUserIcon } = props;
 
   return (
     <>
@@ -21,9 +21,9 @@ export const Component: React.FC<Props> = (props) => {
             <input
               type="radio"
               name="player"
-              value="true"
+              value="X"
               onChange={(event) => {
-                handleSetIsPlayerXFirst(event);
+                handleSetUserIcon(event);
               }}
             />
           </div>
@@ -32,20 +32,18 @@ export const Component: React.FC<Props> = (props) => {
             <input
               type="radio"
               name="player"
-              value="false"
+              value="O"
               onChange={(event) => {
-                handleSetIsPlayerXFirst(event);
+                handleSetUserIcon(event);
               }}
             />
           </div>
         </div>
-        <p className="font-bold">
-          {`REMEMBER: ${isPlayerXFirst ? "X" : "O"} IS GOING FIRST`}
-        </p>
+        <p className="font-bold">{`REMEMBER: ${userIcon} IS GOING FIRST`}</p>
       </div>
       <Link
         className="py-2 px-32 m-4 my-8 rounded-3xl bg-sky-300 hover:bg-sky-200"
-        to={"/new_game"}
+        to={{ pathname: "/game", search: `?player=${userIcon}` }}
       >
         Start Game
       </Link>

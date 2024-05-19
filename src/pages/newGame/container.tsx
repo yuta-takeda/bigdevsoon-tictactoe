@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 import { Component } from "./component";
 
-export const Container: React.FC = () => {
-  const [isPlayerXFirst, setIsPlayerXFirst] = useState(true);
+type Icon = "X" | "O";
 
-  const handleSetIsPlayerXFirst = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setIsPlayerXFirst(event.target.value === "true");
+export const Container: React.FC = () => {
+  const [userIcon, setUserIcon] = useState<Icon>("X");
+
+  const handleSetUserIcon = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserIcon(event.target.value as Icon);
   };
 
   return (
-    <Component
-      isPlayerXFirst={isPlayerXFirst}
-      handleSetIsPlayerXFirst={handleSetIsPlayerXFirst}
-    />
+    <Component userIcon={userIcon} handleSetUserIcon={handleSetUserIcon} />
   );
 };
