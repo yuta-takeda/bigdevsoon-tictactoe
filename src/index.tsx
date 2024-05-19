@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { HomePage } from "./pages/home";
 import { NewGamePage } from "./pages/newGame";
+import { GamePage } from "./pages/game";
 import reportWebVitals from "./reportWebVitals";
 import {
   createBrowserRouter,
@@ -31,6 +32,7 @@ root.render(
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="/new_game" element={<NewGamePage />} />
+          <Route path="/game" element={<GamePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
