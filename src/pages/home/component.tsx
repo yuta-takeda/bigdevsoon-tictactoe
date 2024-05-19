@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export const HomeComponent: React.FC = () => {
   return (
-    <div className="flex flex-col justify-center items-center w-screen h-screen">
+    <>
       <img src={logo} alt={logo} width={200} className="pb-12" />
       <h1 className="m-4 font-sans text-6xl font-black">Tic Tac Toe</h1>
       <h2 className="m-4 text-lg text-center">
@@ -18,6 +18,6 @@ export const HomeComponent: React.FC = () => {
       >
         New Game
       </Link>
-    </div>
+    </>
   );
 };

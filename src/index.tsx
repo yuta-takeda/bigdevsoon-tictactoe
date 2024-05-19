@@ -14,7 +14,11 @@ import {
 } from "react-router-dom";
 
 const Layout = () => {
-  return <Outlet />;
+  return (
+    <div className="flex flex-col justify-center items-center w-screen h-screen">
+      <Outlet />
+    </div>
+  );
 };
 
 const root = ReactDOM.createRoot(
