@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { HomePage } from "./pages/home";
+import { NewGamePage } from "./pages/newGame";
 import reportWebVitals from "./reportWebVitals";
 import {
   createBrowserRouter,
@@ -25,6 +26,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
+          <Route path="/new_game" element={<NewGamePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
