@@ -8,10 +8,11 @@ interface Props {
   currentPlayer: "X" | "O";
   yourCount: number;
   cpuCount: number;
+  handlePlace: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export const Component: React.FC<Props> = (props) => {
-  const { yourIcon, currentPlayer, yourCount, cpuCount } = props;
+  const { yourIcon, currentPlayer, yourCount, cpuCount, handlePlace } = props;
 
   return (
     <>
@@ -46,7 +47,12 @@ export const Component: React.FC<Props> = (props) => {
                 style={{ paddingBottom: "100%" }}
                 key={i}
               >
-                <div className="absolute inset-0 w-full h-full"></div>
+                <div
+                  className="absolute inset-0 w-full h-full"
+                  data-x={i % 3}
+                  data-y={Math.floor(i / 3)}
+                  onClick={(event) => handlePlace(event)}
+                ></div>
               </div>
             );
           })}
