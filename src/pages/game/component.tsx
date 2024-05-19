@@ -2,17 +2,20 @@ import React from "react";
 import xIcon from "../../assets/x.svg";
 import oIcon from "../../assets/o.svg";
 import { Link } from "react-router-dom";
+import type { Icon, FieldIcon } from "./container";
 
 interface Props {
-  yourIcon: "X" | "O";
-  currentPlayer: "X" | "O";
+  yourIcon: Icon;
+  currentPlayer: Icon;
   yourCount: number;
   cpuCount: number;
   handlePlace: (event: React.MouseEvent<HTMLDivElement>) => void;
+  field: FieldIcon[][];
 }
 
 export const Component: React.FC<Props> = (props) => {
-  const { yourIcon, currentPlayer, yourCount, cpuCount, handlePlace } = props;
+  const { yourIcon, currentPlayer, yourCount, cpuCount, handlePlace, field } =
+    props;
 
   return (
     <>
@@ -40,21 +43,47 @@ export const Component: React.FC<Props> = (props) => {
             gridTemplateColumns: "repeat(3, 150px)",
           }}
         >
-          {[...Array(9)].map((_, i) => {
-            return (
-              <div
-                className="relative h-0 bg-white"
-                style={{ paddingBottom: "100%" }}
-                key={i}
-              >
+          {field.map((row, y) => {
+            return row.map((cell, x) => {
+              return (
                 <div
-                  className="absolute inset-0 w-full h-full"
-                  data-x={i % 3}
-                  data-y={Math.floor(i / 3)}
-                  onClick={(event) => handlePlace(event)}
-                ></div>
-              </div>
-            );
+                  className="relative h-0 bg-white"
+                  style={{ paddingBottom: "100%" }}
+                  key={y * 3 + x}
+                >
+                  <div
+                    className="absolute inset-0 m-auto w-full h-full"
+                    data-x={x}
+                    data-y={y}
+                    onClick={(event) => handlePlace(event)}
+                  >
+                    {cell === "X" ? (
+                      <img
+                        src={xIcon}
+                        alt="x"
+                        className="absolute w-24"
+                        style={{
+                          top: "30%",
+                          left: "20%",
+                          pointerEvents: "none",
+                        }}
+                      />
+                    ) : cell === "O" ? (
+                      <img
+                        src={oIcon}
+                        alt="o"
+                        className="absolute w-24"
+                        style={{
+                          top: "30%",
+                          left: "20%",
+                          pointerEvents: "none",
+                        }}
+                      />
+                    ) : null}
+                  </div>
+                </div>
+              );
+            });
           })}
         </div>
         <div className="flex flex-row gap-4 p-4 w-full text-center">

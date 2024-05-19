@@ -4,8 +4,8 @@ import { useSearchParams } from "react-router-dom";
 import xIcon from "../../assets/x.svg";
 import oIcon from "../../assets/o.svg";
 
-type Icon = "X" | "O";
-type FieldIcon = Icon | null;
+export type Icon = "X" | "O";
+export type FieldIcon = Icon | null;
 
 export const Container: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -51,6 +51,7 @@ export const Container: React.FC = () => {
       yourCount={yourCount}
       cpuCount={cpuCount}
       handlePlace={handlePlace}
+      field={field}
     />
   );
 };
