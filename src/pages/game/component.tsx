@@ -47,7 +47,7 @@ export const Component: React.FC<Props> = (props) => {
             return row.map((cell, x) => {
               return (
                 <div
-                  className="relative h-0 bg-white"
+                  className={`relative h-0 bg-white ${yourIcon === "X" ? "hover:bg-cyan-100" : "hover:bg-yellow-100"}`}
                   style={{ paddingBottom: "100%" }}
                   key={y * 3 + x}
                 >

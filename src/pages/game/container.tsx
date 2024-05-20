@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Component } from "./component";
 import { useSearchParams } from "react-router-dom";
 import xIcon from "../../assets/x.svg";
@@ -20,6 +20,14 @@ export const Container: React.FC = () => {
   const [yourCount, setYourCount] = useState<number>(0);
   const [cpuCount, setCpuCount] = useState<number>(0);
 
+  useEffect(() => {
+    if (currentPlayer !== player) {
+      setTimeout(() => {
+        cpuTurn();
+      }, 1000);
+    }
+  }, [currentPlayer]);
+
   const handlePlace = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLDivElement;
     const x = target.dataset.x;
@@ -38,6 +46,33 @@ export const Container: React.FC = () => {
       });
     });
     console.log(newField);
+    setField(newField);
+
+    setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
+    setYourCount(currentPlayer === player ? yourCount + 1 : yourCount);
+    setCpuCount(currentPlayer !== player ? cpuCount + 1 : cpuCount);
+  };
+
+  const cpuTurn = () => {
+    let randX = 0;
+    let randY = 0;
+    while (true) {
+      randX = Math.floor(Math.random() * fieldSize);
+      randY = Math.floor(Math.random() * fieldSize);
+      if (field[randY][randX] === null) {
+        break;
+      }
+    }
+
+    const newField = field.map((row, fieldY) => {
+      return row.map((val, fieldX) => {
+        if (fieldY === randY && fieldX === randX && val === null) {
+          return currentPlayer;
+        } else {
+          return val;
+        }
+      });
+    });
     setField(newField);
     setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
     setYourCount(currentPlayer === player ? yourCount + 1 : yourCount);
