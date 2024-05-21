@@ -21,6 +21,19 @@ export const Container: React.FC = () => {
   const [cpuCount, setCpuCount] = useState<number>(0);
 
   useEffect(() => {
+    const result = isGameOver();
+    if (result.isGameOver) {
+      setTimeout(() => {
+        alert(`${currentPlayer} won!!`);
+      }, 1000);
+    } else {
+      if (yourCount !== 0) {
+        setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
+      }
+    }
+  }, [yourCount, cpuCount]);
+
+  useEffect(() => {
     if (currentPlayer !== player) {
       setTimeout(() => {
         cpuTurn();
@@ -48,7 +61,6 @@ export const Container: React.FC = () => {
     console.log(newField);
     setField(newField);
 
-    setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
     setYourCount(currentPlayer === player ? yourCount + 1 : yourCount);
     setCpuCount(currentPlayer !== player ? cpuCount + 1 : cpuCount);
   };
@@ -74,9 +86,82 @@ export const Container: React.FC = () => {
       });
     });
     setField(newField);
-    setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
+
     setYourCount(currentPlayer === player ? yourCount + 1 : yourCount);
     setCpuCount(currentPlayer !== player ? cpuCount + 1 : cpuCount);
+  };
+
+  const isGameOver = (): {
+    isGameOver: boolean;
+    coordinate: number[][] | null;
+  } => {
+    // 横に揃っている場合
+    for (let i = 0; i < field.length; i++) {
+      const row = field[i];
+      if (row.every((val) => val === row[0] && val != null)) {
+        return {
+          isGameOver: true,
+          coordinate: [
+            [0, i],
+            [1, i],
+            [2, i],
+          ],
+        };
+      }
+    }
+
+    // 縦に揃っている場合
+    for (let i = 0; i < fieldSize; i++) {
+      if (field.every((row) => row[i] === field[0][i] && row[i] != null)) {
+        return {
+          isGameOver: true,
+          coordinate: [
+            [i, 0],
+            [i, 1],
+            [i, 2],
+          ],
+        };
+      }
+    }
+
+    // 斜め（右下がり）になっている場合
+    if (
+      [...Array(fieldSize)].every(
+        (_, i) => field[i][i] === field[0][0] && field[0][0] != null,
+      )
+    ) {
+      return {
+        isGameOver: true,
+        coordinate: [
+          [0, 0],
+          [1, 1],
+          [2, 2],
+        ],
+      };
+    }
+
+    // 斜め（右上がり）になっている場合
+    if (
+      [...Array(fieldSize)].every(
+        (_, i) =>
+          field[i][fieldSize - i - 1] === field[0][fieldSize - 1] &&
+          field[0][fieldSize - 1] != null,
+      )
+    ) {
+      return {
+        isGameOver: true,
+        coordinate: [
+          [2, 0],
+          [1, 1],
+          [0, 2],
+        ],
+      };
+    }
+
+    return {
+      isGameOver: false,
+      coordinate: null,
+    };
   };
 
   return (
