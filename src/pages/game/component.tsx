@@ -3,6 +3,7 @@ import xIcon from "../../assets/x.svg";
 import oIcon from "../../assets/o.svg";
 import { Link } from "react-router-dom";
 import type { Icon, FieldIcon } from "./container";
+import Modal from "react-modal";
 
 interface Props {
   yourIcon: Icon;
@@ -13,6 +14,16 @@ interface Props {
   field: FieldIcon[][];
   isGameOver: boolean;
 }
+
+const modalStyles = {
+  content: {
+    top: "50%",
+    bottom: "auto",
+    transform: "translate(0%, -50%)",
+    opacity: 0.7,
+    backgroundColor: "#ffffff",
+  },
+};
 
 export const Component: React.FC<Props> = (props) => {
   const {
@@ -133,6 +144,40 @@ export const Component: React.FC<Props> = (props) => {
           Reset Game
         </Link>
       </div>
+      <Modal isOpen={isGameOver} contentLabel="GameOver" style={modalStyles}>
+        <div className="p-8">
+          <p className={`m-2 text-center`}>
+            {currentPlayer === yourIcon ? "YOU" : "CPU"} WON!
+          </p>
+          <div className="flex flex-row justify-center items-center m-6 text-6xl">
+            <img
+              src={currentPlayer === "X" ? xIcon : oIcon}
+              width="128"
+              alt="currentPlayer"
+              className="mt-4"
+            />
+            <span
+              className={yourIcon === "X" ? "text-cyan-400" : "text-yellow-400"}
+            >
+              WON THIS ROUND
+            </span>
+          </div>
+          <div className="m-8 text-center">
+            <Link
+              className="py-2 px-16 m-4 text-center rounded-3xl bg-slate-300 hover:bg-slate-400"
+              to={"/"}
+            >
+              Quit
+            </Link>
+            <Link
+              className="py-2 px-16 m-4 text-center bg-cyan-300 rounded-3xl hover:bg-cyan-400"
+              to={"/new_game"}
+            >
+              New Game
+            </Link>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 };

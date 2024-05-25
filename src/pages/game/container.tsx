@@ -25,9 +25,6 @@ export const Container: React.FC = () => {
     const result = calcIsGameOver();
     if (result.isGameOver) {
       setIsGameOver(true);
-      setTimeout(() => {
-        alert(`${currentPlayer} won!!`);
-      }, 100);
     } else {
       if (yourCount !== 0) {
         setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
