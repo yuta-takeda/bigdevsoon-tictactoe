@@ -11,11 +11,19 @@ interface Props {
   cpuCount: number;
   handlePlace: (event: React.MouseEvent<HTMLDivElement>) => void;
   field: FieldIcon[][];
+  isGameOver: boolean;
 }
 
 export const Component: React.FC<Props> = (props) => {
-  const { yourIcon, currentPlayer, yourCount, cpuCount, handlePlace, field } =
-    props;
+  const {
+    yourIcon,
+    currentPlayer,
+    yourCount,
+    cpuCount,
+    handlePlace,
+    field,
+    isGameOver,
+  } = props;
 
   return (
     <>
@@ -52,10 +60,14 @@ export const Component: React.FC<Props> = (props) => {
                   key={y * 3 + x}
                 >
                   <div
-                    className="absolute inset-0 m-auto w-full h-full"
+                    className="absolute inset-0 m-auto w-full h-full handlePlace"
                     data-x={x}
                     data-y={y}
-                    onClick={(event) => handlePlace(event)}
+                    onClick={
+                      currentPlayer !== yourIcon || isGameOver
+                        ? undefined
+                        : (event) => handlePlace(event)
+                    }
                   >
                     {cell === "X" ? (
                       <img

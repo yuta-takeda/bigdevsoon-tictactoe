@@ -19,13 +19,15 @@ export const Container: React.FC = () => {
   ]);
   const [yourCount, setYourCount] = useState<number>(0);
   const [cpuCount, setCpuCount] = useState<number>(0);
+  const [isGameOver, setIsGameOver] = useState<boolean>(false);
 
   useEffect(() => {
-    const result = isGameOver();
+    const result = calcIsGameOver();
     if (result.isGameOver) {
+      setIsGameOver(true);
       setTimeout(() => {
         alert(`${currentPlayer} won!!`);
-      }, 1000);
+      }, 100);
     } else {
       if (yourCount !== 0) {
         setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
@@ -91,7 +93,7 @@ export const Container: React.FC = () => {
     setCpuCount(currentPlayer !== player ? cpuCount + 1 : cpuCount);
   };
 
-  const isGameOver = (): {
+  const calcIsGameOver = (): {
     isGameOver: boolean;
     coordinate: number[][] | null;
   } => {
@@ -172,6 +174,7 @@ export const Container: React.FC = () => {
       cpuCount={cpuCount}
       handlePlace={handlePlace}
       field={field}
+      isGameOver={isGameOver}
     />
   );
 };
