@@ -40,14 +40,21 @@ export const Component: React.FC<Props> = (props) => {
 
   return (
     <>
-      <div
-        className="flex flex-col justify-between items-center"
-        style={{ width: "500px" }}
-      >
+      <div className="flex flex-col justify-between items-center">
         <div className="flex flex-row justify-between items-center py-8 px-2 w-full">
           <div className="flex flex-row">
-            <img src={xIcon} alt="x" width="64" />
-            <img src={oIcon} alt="o" width="64" />
+            <img
+              src={xIcon}
+              alt="x"
+              className="w-[min(12vw, 64px)]"
+              width="64"
+            />
+            <img
+              src={oIcon}
+              alt="o"
+              className="w-[min(12vw, 64px)]"
+              width="64"
+            />
           </div>
           <div className="flex flex-row justify-center p-4 w-48 rounded-lg bg-slate-100">
             <img
@@ -59,9 +66,9 @@ export const Component: React.FC<Props> = (props) => {
           </div>
         </div>
         <div
-          className="grid gap-2 p-4 rounded-lg bg-slate-100"
+          className="grid gap-2 rounded-lg p-[min(2vw, 0.5rem)] bg-slate-100"
           style={{
-            gridTemplateColumns: "repeat(3, 150px)",
+            gridTemplateColumns: "repeat(3, min(25vw, 150px))",
           }}
         >
           {field.map((row, y) => {
@@ -86,7 +93,7 @@ export const Component: React.FC<Props> = (props) => {
                       <img
                         src={xIcon}
                         alt="x"
-                        className="absolute w-24"
+                        className="absolute w-[16vw] max-w-24"
                         style={{
                           top: "30%",
                           left: "20%",
@@ -97,7 +104,7 @@ export const Component: React.FC<Props> = (props) => {
                       <img
                         src={oIcon}
                         alt="o"
-                        className="absolute w-24"
+                        className="absolute w-[16vw] max-w-24"
                         style={{
                           top: "30%",
                           left: "20%",
@@ -147,11 +154,11 @@ export const Component: React.FC<Props> = (props) => {
         </Link>
       </div>
       <Modal isOpen={isGameOver} contentLabel="GameOver" style={modalStyles}>
-        <div className="p-8">
+        <div className="p-[4vw]">
           {isDraw ? (
             <>
               <p className={`m-2 text-center`}>NOBODY WINS</p>
-              <div className="flex flex-row justify-center items-center m-6 mb-10 text-6xl">
+              <div className="flex flex-row justify-center items-center m-6 mb-10 text-[max(6xl, 16)]">
                 <span>THIS GAME IS A TIE</span>
               </div>
             </>
@@ -160,12 +167,12 @@ export const Component: React.FC<Props> = (props) => {
               <p className={`m-2 text-center`}>
                 {currentPlayer === yourIcon ? "YOU" : "CPU"} WON!
               </p>
-              <div className="flex flex-row justify-center items-center m-6 text-6xl">
+              <div className="flex flex-row justify-center items-center text-[4vw] my-[2vh]">
                 <img
                   src={currentPlayer === "X" ? xIcon : oIcon}
                   width="128"
                   alt="currentPlayer"
-                  className="mt-4"
+                  className="mt-[2vw] w-[8vw] max-w-[128px]"
                 />
                 <span
                   className={
@@ -178,15 +185,15 @@ export const Component: React.FC<Props> = (props) => {
             </>
           )}
 
-          <div className="m-8 text-center">
+          <div className="text-center m-[2vw]">
             <Link
-              className="py-2 px-16 m-4 text-center rounded-3xl bg-slate-300 hover:bg-slate-400"
+              className="py-2 mr-2 text-center rounded-3xl my-[4vh] px-[4vw] bg-slate-300 hover:bg-slate-400"
               to={"/"}
             >
               Quit
             </Link>
             <Link
-              className="py-2 px-16 m-4 text-center bg-cyan-300 rounded-3xl hover:bg-cyan-400"
+              className="py-2 text-center bg-cyan-300 rounded-3xl hover:bg-cyan-400 my-[4vh] px-[4vw]"
               to={"/new_game"}
             >
               New Game
