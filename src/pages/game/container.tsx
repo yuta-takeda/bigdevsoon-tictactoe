@@ -20,11 +20,15 @@ export const Container: React.FC = () => {
   const [yourCount, setYourCount] = useState<number>(0);
   const [cpuCount, setCpuCount] = useState<number>(0);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
+  const [isDraw, setIsDraw] = useState<boolean>(false);
 
   useEffect(() => {
     const result = calcIsGameOver();
     if (result.isGameOver) {
       setIsGameOver(true);
+      if (result.isDraw) {
+        setIsDraw(true);
+      }
     } else {
       if (yourCount !== 0) {
         setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
@@ -93,6 +97,7 @@ export const Container: React.FC = () => {
   const calcIsGameOver = (): {
     isGameOver: boolean;
     coordinate: number[][] | null;
+    isDraw: boolean;
   } => {
     // 横に揃っている場合
     for (let i = 0; i < field.length; i++) {
@@ -105,6 +110,7 @@ export const Container: React.FC = () => {
             [1, i],
             [2, i],
           ],
+          isDraw: false,
         };
       }
     }
@@ -119,6 +125,7 @@ export const Container: React.FC = () => {
             [i, 1],
             [i, 2],
           ],
+          isDraw: false,
         };
       }
     }
@@ -136,6 +143,7 @@ export const Container: React.FC = () => {
           [1, 1],
           [2, 2],
         ],
+        isDraw: false,
       };
     }
 
@@ -154,12 +162,23 @@ export const Container: React.FC = () => {
           [1, 1],
           [0, 2],
         ],
+        isDraw: false,
+      };
+    }
+
+    // 引き分けの場合
+    if (field.every((row) => row.every((val) => val != null))) {
+      return {
+        isGameOver: true,
+        coordinate: null,
+        isDraw: true,
       };
     }
 
     return {
       isGameOver: false,
       coordinate: null,
+      isDraw: false,
     };
   };
 
@@ -172,6 +191,7 @@ export const Container: React.FC = () => {
       handlePlace={handlePlace}
       field={field}
       isGameOver={isGameOver}
+      isDraw={isDraw}
     />
   );
 };

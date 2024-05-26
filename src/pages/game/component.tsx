@@ -13,6 +13,7 @@ interface Props {
   handlePlace: (event: React.MouseEvent<HTMLDivElement>) => void;
   field: FieldIcon[][];
   isGameOver: boolean;
+  isDraw: boolean;
 }
 
 const modalStyles = {
@@ -34,6 +35,7 @@ export const Component: React.FC<Props> = (props) => {
     handlePlace,
     field,
     isGameOver,
+    isDraw,
   } = props;
 
   return (
@@ -146,22 +148,36 @@ export const Component: React.FC<Props> = (props) => {
       </div>
       <Modal isOpen={isGameOver} contentLabel="GameOver" style={modalStyles}>
         <div className="p-8">
-          <p className={`m-2 text-center`}>
-            {currentPlayer === yourIcon ? "YOU" : "CPU"} WON!
-          </p>
-          <div className="flex flex-row justify-center items-center m-6 text-6xl">
-            <img
-              src={currentPlayer === "X" ? xIcon : oIcon}
-              width="128"
-              alt="currentPlayer"
-              className="mt-4"
-            />
-            <span
-              className={yourIcon === "X" ? "text-cyan-400" : "text-yellow-400"}
-            >
-              WON THIS ROUND
-            </span>
-          </div>
+          {isDraw ? (
+            <>
+              <p className={`m-2 text-center`}>NOBODY WINS</p>
+              <div className="flex flex-row justify-center items-center m-6 mb-10 text-6xl">
+                <span>THIS GAME IS A TIE</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className={`m-2 text-center`}>
+                {currentPlayer === yourIcon ? "YOU" : "CPU"} WON!
+              </p>
+              <div className="flex flex-row justify-center items-center m-6 text-6xl">
+                <img
+                  src={currentPlayer === "X" ? xIcon : oIcon}
+                  width="128"
+                  alt="currentPlayer"
+                  className="mt-4"
+                />
+                <span
+                  className={
+                    yourIcon === "X" ? "text-cyan-400" : "text-yellow-400"
+                  }
+                >
+                  WON THIS ROUND
+                </span>
+              </div>
+            </>
+          )}
+
           <div className="m-8 text-center">
             <Link
               className="py-2 px-16 m-4 text-center rounded-3xl bg-slate-300 hover:bg-slate-400"
